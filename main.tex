@@ -233,7 +233,7 @@ Da sowohl die disjunktive als auch die konjunktive Normalform nur die Operatione
 \subsection{Implementierung}
 Boolesche Funktionen werden mit Hilfe der Gatterlogik implementiert. 
 Das heißt, mehrere elementare Gatter werden zusammengeschaltet, um komplexe Boolesche Funktionen zu berechnen:
-%TODO Elementare Gatter & Zusammengesetze Gatter
+% TODO Elementare Gatter & Zusammengesetze Gatter
 
 \subsubsection{Vollständige Operatorenmengen}
 % TODO NAND, zeige Vollständigkeit
@@ -982,6 +982,8 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
 \end{figure}
 
 \section{Multiplikation}
+%TODO
+Binärarithmetik p37ff
 \subsection{Multiplikation mit Potenzen der Basis}
 \subsection{Multiplikation mit Zweierpotenzen: Bit-Schieben}
 \subsection{Allgemeine Binäre Multiplikation}
@@ -994,4 +996,130 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
 \subsection{Die ALU in der Hack-Architektur}
 \subsection{Einbindung der ALU in den Prozessor der Hack-Architektur}
 
+
+\chapter{Sequentielle Logik}
+\section{Sequentielle Logik}
+\subsection{Logikschaltungen: Kombinatorische \& Sequentielle Logik}
+\begin{figure}[H]
+  \begin{minipage}[t]{0.48\textwidth}
+    \paragraph{Kombinatorische Logik}
+    
+    \centering
+    
+    \includegraphics[width=\textwidth]{graphics/kombinatorische_logik}
+    
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.48\textwidth}
+    \paragraph{Sequentielle Logik}
+    
+    \centering
+    
+    \includegraphics[width=\textwidth]{graphics/sequentielle_logik}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \underline{Implementierung: Schaltnetze}
+    
+    \begin{itemize}
+      \item Einfaches Berechnen von Ein- \& Ausgaben
+      \item Keine Informationsspeicherung
+      \item Zustandslosigkeit
+      \item verzögerungsfreie Berechnung
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \underline{Implementierung: Schaltwerke}
+    
+    \begin{itemize}
+      \item Rückkopplung von Ausgaben auf Eingaben
+      \item Explizite Informationsspeicherung
+      \item Unterscheidung von Zuständen
+      \item Gatterlaufzeiten explizit berücksichtigt
+    \end{itemize}
+    
+  \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{minipage}[T]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{graphics/kombinatorische_logikschaltung}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[T]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{graphics/sequentielle_logikschaltung}
+  \end{minipage}
+\end{figure}
+
+\subsection{Prinzip der Rückkopplung}
+\begin{defbox}[Rückkopplung]
+  \begin{figure}[H]
+    \begin{minipage}[T]{0.7\textwidth}
+      Durch Rückkopplung werden Ausgaben als Eingabesignal verwendet. 
+      Hierdurch kann ein (Ausgabe-) Zustand festgehalten werden, 
+      bis ein Ergeignis ihn wieder ändert.
+    \end{minipage}
+    \hfill
+    \begin{minipage}[T]{0.25\textwidth}
+      \includegraphics{graphics/rückgekoppelter_2_wege_multiplexer}
+    \end{minipage}
+  \end{figure}
+\end{defbox}
+
+\paragraph{Probleme der Rückkopplung}
+
+Durch Rückkopplung kann es zu (unerwünschten) \textit{Schwingungen} kommen. 
+Diese sind ein Beispiel für \textit{Signallaufzeitprobleme}, die durch Rückkopplungen auftreten können).
+
+Ein weiteres Beispiel sind sogenannte \textit{Wettlaufsituationen (Race Conditions)}, die auftreten, 
+wenn sich zwei Signale auf zwei oder mehr Wegen ausbreiten, und die Ausgabe davon abhängen kann, 
+welches Signal schneller weitergegeben wird
+
+Rückkopplungen lassen sich am leichtesten durch ein zentral erzeugtes \underline{\textit{Taktsignal}} vermeiden, 
+das bestimmt, wann Eingaben übernommen werden.
+
+\subsection{Asynchrone und synchrone Schaltwerke}
+
+\begin{figure}[H]
+  \begin{minipage}[T]{0.45\textwidth} w
+    \centering
+    \paragraph{Asynchrone Schaltwerke}
+    \begin{itemize}
+      \item Direkte Steuerung durch Änderung der Eingangssignale
+      \item Wann und ob ein stabiler Zustand erreicht wird von Gatterlaufzeit abhängig
+      \item Oft komplizierter, aufwendiger Entwurf
+      \item Sehr schnelle Schaltwerke möglich
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[T]{0.45\textwidth}
+    \centering
+    \paragraph{Synchrone Schaltwerke}
+    \begin{itemize}
+      \item Steuerung durch Taktsignal
+      \item Eingangssignale nur zu von Takt festgelegten Zeitpunkten übernommen
+      \item Meist einfacher, systematischer Entwurf.
+      \item Langsamstes Bauteil bestimmt maximal mögliche Taktfrequenz
+    \end{itemize}
+  \end{minipage}
+\end{figure}
+
+\subsection{Taktsignal (Clock Signal)}
+
+\section{Bistabile Kippstufen}
+
+\section{Register, Zähler und Speicher}
+
+\section{Hardware-Simulation der sequentiellen Logik}
+
+
+
+
 \end{document}
+
+
