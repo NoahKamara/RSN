@@ -1950,7 +1950,7 @@ Ein gutes Beispiel für festverdrahtete Prozessoren sind Waschmaschinen:
     \begin{itemize}
       \item Arithmetisch-Logische Einheit (ALU) berechnet eine funktion $f(registers)$
       \item Ausgabe der ALU wird in ein Register geschrieben
-      \item Nächste auszuf����hrende Anweisung muss bestimmt werden (Bei Verzweigungsbefehl u.U. nicht die im Speicher folgende)
+      \item Nächste auszuführende Anweisung muss bestimmt werden (Bei Verzweigungsbefehl u.U. nicht die im Speicher folgende)
     \end{itemize}
   \end{minipage}
   \hfill
@@ -2732,12 +2732,106 @@ p31
 
 \section{Die Programmiersprache Jack}
 \subsection{Allgemeine Syntax}
-\subsection{Datentypen und Speicheranforderung}
-\subsection{Anweisungen, Ausdrücke und FUnktionsaufrufe}
+\begin{figure}[H]
+  \begin{minipage}[t]{0.45\textwidth}
+    \begin{itemize}
+      \item Jack-Programm ist eine Sammlung von Jack-Klassen
+      \item Jack-Klasse: Sammlung von Jack-Unterprogrammen
+      \item Jack-Unterprogramm:
+            \begin{itemize}
+              \item Funktion
+              \item Methode
+              \item Konstruktor
+            \end{itemize}
+      \item Zwingend: Eine Klasse $Main$, mit Funktion $main$
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \caption{Jack-Programmierbare}
+    \label{fig:jack_syntax}
+    \centering
+    \includegraphics[width=\textwidth]{jack_syntax}
+  \end{minipage}
+\end{figure}
 
-\section{Compiler (Speziell für Jack-Programmiersprache)}
+\subsection{Datentypen und Speicheranforderung}
+Es gibt drei arten von Datentypen:
+\paragraph{Basisdatentypen} (primitive types)
+\begin{itemize}
+  \item $int$ 16-Bit-Ganzzahlen im Zweierkomplement
+  \item $boolean$ Boolscher Wert
+  \item $char$ Unicode-Zeichen
+\end{itemize}
+
+\paragraph{Abstrakte Datentypen} (vom Betriebssystem oder Benutzer definiert)
+\begin{itemize}
+  \item $String$ (definiert durch Betriebssystem)
+  \item $Fraction$ (definiert durch Benutzer)
+  \item $List$ (definiert durch Benutzer)
+\end{itemize}
+
+\paragraph{Anwedungsspezifische Datentypen} (vom Benutzer definiert)
+\begin{itemize}
+  \item $CustomType$
+  \item $AnotherCustomType$
+  \item $...$
+\end{itemize}
+
+\subsection{Speicheranforderung}
+\begin{itemize}
+  \item Basisdatentypen wird bei Deklaration Speicher zugeordnet
+  \item Objektvariablen wird bei Konstruktion (aufrufen des constructors) Speicher zugeordnet
+\end{itemize}
+
+\section{Compiler (speziell für Jack)}
+\subsection{Architektur}
+\paragraph{Moderne Pbersetzer sind zweistufig}
+\begin{itemize}
+  \item \textbf{1. Stufe} (front-end): von Hochsprache nach Zwischensprache
+  \item \textbf{2. Stufe} (back-end): von Zwischensprache nach Maschinensprache
+\end{itemize}
+
+
 \subsection{Architektur, Lexikalische Analyse, Parsing}
+\begin{figure}[H]
+  \caption{Jack-Compiler}
+  \label{fig:compiler_front-end}
+  \centering
+  \includegraphics{compiler_front-end}
+\end{figure}
+
+\subsubsection{Syntaxanalyse}
+\begin{figure}[H]
+  \begin{minipage}[t]{0.45\textwidth}
+    \paragraph{Lexikalische Analyze} (tokenizing)
+    
+    Erzeugen eines Stroms von Sprachatomen (token Stream)
+    \begin{itemize}
+      \item Entferne Leerzeich. \& Kommentaren
+      \item Erzeuge Liste von Sprachatomen
+    \end{itemize}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \paragraph{Parsen} (parsing)
+    
+    Zuordnen der Sprachatome (token) zu der Sprachgrammatik 
+  \end{minipage}
+\end{figure}
+\begin{center}
+  Abschließend: \\
+  XML-Ausgabe als Nachweis, dass Syntaxanalyse funktioniert
+\end{center}
+
 \subsection{Kontextfreie Grammatiken}
+Jede (formale) Sprache kann durch eine \textit{Grammatik} beschreiben werden.
+Eine solche Grammatik besteht aus \textit{Produktionsregeln}, die angeben, 
+wie aus Wörtern neue Wörter produziert werden.
+
+In Programmiersprachen verwendet man \textit{kontextfreie Sprachen}, die von
+\textit{Stapel-/Kellerautomaten} erkannt (geparsed) werden können.
+
 \subsection{Parse-Bäume, Parsen durch rekursiven Abstieg}
 \subsection{jack-Grammatik}
 \subsection{Jack-Syntaxanalyse}
