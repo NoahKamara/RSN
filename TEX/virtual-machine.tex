@@ -1,0 +1,124 @@
+% -------- PACKAGES --------------------------------------------------------
+% Document Class
+\documentclass[12pt]{report}
+
+% Page Layout & Formatting
+\usepackage[a4paper,landscape,width=150mm,top=10mm,bottom=20mm,left=20mm,right=20mm]{geometry} % Layout
+\usepackage[many]{tcolorbox} % Boxes (Definitions, Examples)
+\usepackage{graphicx} % Images / Other Graphics
+\graphicspath{{../graphics/}}
+\usepackage{float} % Floats (like Minipage) alignment
+\usepackage{parskip} % no indents in new par
+\usepackage[hidelinks]{hyperref} % Hyperrefs
+\usepackage{bookmark}% Bookmarks
+
+% Math Mode
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Language Specific
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel} 
+
+% Tables & Arrays
+\usepackage{array}   % column types / tables
+\usepackage{multicol} % tables, multicolumn
+\usepackage{tabularx}
+
+\usepackage{caption} % Caption styling
+\usepackage{xcolor}
+
+\newcommand*\sepline{%
+   \begin{center}
+     \rule[1ex]{\textwidth}{.5pt}
+   \end{center}}
+
+% -------- MATH MODE -------------------------------------------------------
+% Math Mode Table Columns
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+
+% Überträge
+\def\cred{\hbox to0pt{\textcolor{blue}{${}_{\tt 1}$}\hss}}
+
+
+% -------- DOCUMENT -------------------------------------------------------
+\begin{document}
+
+% ----------- Operationen, Programmablaufsteuerung & Speichersegmente -----
+\begin{samepage}
+    \begin{figure}[H]
+        \begin{minipage}[t]{0.45\textwidth}
+            \begin{center}
+                \Huge
+                VM - Operationsn
+            \end{center}
+            \sepline
+
+            \begin{table}[H]
+                \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|l|l|l|}
+                    \hline
+                    Anweisung & Rückgabewert                  & Beschreibung                            \\ \hline
+                    $add$     & $x+y$                         & Ganzzahladdition     \\
+                    $sub$     & $x-y$                         & Ganzzahlsubtraktion     \\
+                    $neg$     & $-y$                          & arithmetische Negation \\
+                    $eq$      & $-1$ falls $x = y$, sonst $0$ & Test auf Gleichheit                     \\
+                    $gt$      & $-1$ falls $x > y$, sonst $0$ & Test auf größer                         \\
+                    $lt$      & $-1$ falls $x < y$, sonst $0$ & Test auf kleiner                        \\
+                    $and$     & $x\ \&\ y$                    & bitweises Und                           \\
+                    $or$      & $x\ |\ y$                     & bitweises Oder                          \\
+                    $not$     & $~y$                          & bitweise Negation                       \\ \hline
+                \end{tabular*}
+            \end{table}
+        \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.45\textwidth}
+            \begin{center}
+                \Huge
+                VM - Programmablaufsteuerung
+            \end{center}
+            \sepline
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|l|l|}
+                    \hline
+                    Segment     & Verwendungszweck                                                                                                                                                    \\ \hline
+                    $label\ c$   & \begin{tabular}[c]{@{}l@{}}Definiert Marke im Programmtext, \\ z.B. als Sprungziel \\\  \end{tabular}                                                                     \\
+                    $goto\ c$    & \begin{tabular}[c]{@{}l@{}}Springt zu einer Marke im Programmtext \\ (unbedingter Sprung) \\\ \end{tabular}                                                              \\
+                    $if-goto\ c$ & \begin{tabular}[c]{@{}l@{}}Springt zu einer Marke im Programmtext, \\ wenn das oberste Stapelelement\\ nicht $0$ ist (Element wird von Stapel entfernt\end{tabular} \\ \hline
+                \end{tabular*}
+            \end{table}
+        \end{minipage}
+    \end{figure}
+
+    \begin{figure}[H]
+        \begin{center}
+            \Huge
+            VM - Speichersegmente
+        \end{center}
+        \sepline
+        \begin{table}[H]
+            \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|l|l|l|}
+                \hline
+                Segment      & Verwendungszweck                          & Kommentare                 \\ \hline
+                $argument$   & Speichert Argumente einer Funktion        & \begin{tabular}[c]{@{}l@{}}von VM dynamisch angelegt,\\ wenn Funktion aufgerufen wird\end{tabular}  \\
+                $local$      & Speichert lokale Variablen einer Funktion & \begin{tabular}[c]{@{}l@{}}von VM dynamisch angelegt,\\ wenn Funktion aufgerufen wird\end{tabular}  \\
+                $static$     & \begin{tabular}[c]{@{}l@{}}Speichert statische Variablen, \\ die von allen Funktionen in einer VM-Datei geteilt werden\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}von VM für jede VM-Datei angelegt,\\ kann von allen Funktionen in der Datei benutzt werden\end{tabular}  \\
+                $constant$   & \begin{tabular}[c]{@{}l@{}}Pseudo-Segment;\\ enthält alle Konstanten $0...32767$\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}durch VM emuliert;\\ kann von allen Funkt. des Programms gesehen werden\end{tabular}  \\
+                $this$, $that$ & \begin{tabular}[c]{@{}l@{}}Mehrzwecksegmente; \\ können auf verschiedene Bereiche eines Heaps verweisen\end{tabular}                & \begin{tabular}[c]{@{}l@{}}Jede VM-Funkt. kann verwenden,\\ um ausgewählte Bereiche des Heaps zu verändern\end{tabular} \\
+                $pointer$    & \begin{tabular}[c]{@{}l@{}}Zwei-Zellen-Segment, \\ enthält Basisadressen der $this$ und $that$ Segmente\end{tabular}                & \begin{tabular}[c]{@{}l@{}}Jede VM-Funkt kann $pointer$ 0 (1) auf Adresse setzen, \\ sodass $this$ ($that$) Segment auf Speicherbereich ausgerichtet wird, \\ der an dieser Adresse anfängt\end{tabular} \\
+                $temp$       & \begin{tabular}[c]{@{}l@{}}Festes Acht-Zellen-Segment;\\ enthält temporäre Variablen zur allgemeinen Verwendung\end{tabular}                & \begin{tabular}[c]{@{}l@{}}Jede VM-Funkt. kann verwenden,\\ beliebiger Zweck, wird von allen Funkt. des Programms geteilt\end{tabular} \\ \hline
+            \end{tabular*}
+        \end{table}
+    \end{figure}
+\end{samepage}
+
+
+\pagebreak
+% -------- DOCUMENT -------------------------------------------------------
+\begin{samepage}
+\end{samepage}
+
+
+\end{document}

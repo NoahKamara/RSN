@@ -1,0 +1,232 @@
+% -------- PACKAGES --------------------------------------------------------
+% Document Class
+\documentclass[12pt]{report}
+
+% Page Layout & Formatting
+\usepackage[a4paper,landscape,width=150mm,top=10mm,bottom=20mm,left=20mm,right=20mm]{geometry} % Layout
+\usepackage[many]{tcolorbox} % Boxes (Definitions, Examples)
+\usepackage{graphicx} % Images / Other Graphics
+\graphicspath{{../graphics/}}
+\usepackage{float} % Floats (like Minipage) alignment
+\usepackage{parskip} % no indents in new par
+\usepackage[hidelinks]{hyperref} % Hyperrefs
+\usepackage{bookmark}% Bookmarks
+
+% Math Mode
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Language Specific
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel} 
+
+% Tables & Arrays
+\usepackage{array}   % column types / tables
+\usepackage{multicol} % tables, multicolumn
+\usepackage{tabularx}
+
+\usepackage{caption} % Caption styling
+\usepackage{xcolor}
+
+\newcommand*\sepline{%
+   \begin{center}
+     \rule[1ex]{\textwidth}{.5pt}
+   \end{center}}
+
+% -------- MATH MODE -------------------------------------------------------
+% Math Mode Table Columns
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+
+% Überträge
+\def\cred{\hbox to0pt{\textcolor{blue}{${}_{\tt 1}$}\hss}}
+
+
+% -------- DOCUMENT -------------------------------------------------------
+\begin{document}
+
+% ----------- Allgemein & A-/L-Anweisungen -------------------
+\begin{samepage}
+    \begin{figure}[H]
+        \begin{minipage}[t]{0.45\textwidth}
+            \begin{center}
+                \Huge
+                Hack-Assembly - Symbole
+            \end{center}
+            \sepline
+
+            \begin{table}[H]
+                \caption*{Anweisungstypen}
+                \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|l|ll|}
+                    \hline
+                    Anweisungstyp & Bedeutung                       &\\ \hline
+                    A-Anweisungen & address instructions            &\\
+                    C-Anweisungen & compute instructions            &\\
+                    L-Anweisungen & labels declaration instructions &\\ \hline
+                \end{tabular*}
+            \end{table}
+
+            \begin{table}[H]
+                \caption*{Vordefinierte Symbole}
+                \centering
+
+                \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|c|ll|}
+                    \hline
+                    Symbol & Beschreibung                          &\\\hline
+                    A      & A-Register (Addressenregister)        &\\
+                    D      & D-Register (Datenregister)            &\\
+                    M      & Hauptspeicher-Register (Adresse A)    &\\
+                    SP     & RAM-Addresse 0                        &\\
+                    LCL    & RAM-Addresse 1                        &\\
+                    ARG    & RAM-Addresse 2                        &\\
+                    THIS   & RAM-Addresse 3                        &\\
+                    THAT   & RAM-Addresse 4                        &\\
+                    R0-R15 & RAM-Register (16)                     &\\
+                    SCREEN & 16384 Adresse des Bildschirmspeichers &\\
+                    KBD    & 24576 Adresse des Tastaturregister    &\\ \hline
+                \end{tabular*}
+            \end{table}
+        \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.45\textwidth}
+            \begin{center}
+                \Huge
+                Hack-Assembly - A-Anweisungen
+            \end{center}
+            \sepline
+
+            \centering
+            \begin{tabular}{l}
+                \textbf{@value} \\
+                \textbf{SOMETHING}
+            \end{tabular}
+
+            \begin{table}[H]
+                \caption*{Verwendung der A-Anweisung}
+                \begin{tabular}{|c|c|l|}
+                    \hline
+                    $@value$ & Vorgang                   & Beschreibung                 \\\hline
+                    $D=A$    & $D \leftarrow value$      & Laden einer Konstante        \\
+                    $D=M$    & $D \leftarrow RAM[value]$ & Auswahl Datenspeicherzelle   \\
+                    $JMP$    & $fetch\ ROM[value]$       & Auswahl Befehlsspeicherzelle \\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{center}
+                \Huge
+                Hack-Assembly - L-Anweisungen
+            \end{center}
+            \sepline
+
+            \centering
+            \begin{tabular}{l}
+                \textbf{(LABEL)}              \\
+                \hspace{10pt} // Instructions \\
+                \hspace{10pt}\textbf{@LABEL}  \\
+                \hspace{10pt}\textbf{0; JMP}
+            \end{tabular}
+
+            Die Anweisung (LABEL) deklariert ein neues Label mit dem Name 'Label'. Der Assembler
+            übersetzt diese dann in die Addresse der nächsten Anweisung (nachfolgende Zeile)
+        \end{minipage}
+    \end{figure}
+\end{samepage}
+
+
+\pagebreak
+
+
+% ----------- C-Anweisungen -------------------
+\begin{samepage}
+    \begin{center}
+        \Huge
+        Hack-Assembly - C-Anweisungen
+    \end{center}
+    \sepline
+
+    \centering
+    \begin{tabular}{ccccc}
+        \textbf{DEST}               & = & \textbf{COMP}            & ; & \textbf{JUMP}   \\
+        Speicherort des Ergebnisses &   & Auszuführende Berechnung &   & Sprungbedingung
+    \end{tabular}
+    \begin{figure}[H]
+        \begin{minipage}[t]{0.45\textwidth}
+            \centering
+            \begin{table}[H]
+                \caption*{Computation Symboltabelle (ALU)}
+                \centering
+                \begin{tabular}{llL}
+                    x: D & y: A & m=1 \rightarrow A=M \\
+                \end{tabular}
+
+                \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|CC|CC|CC|C|C|}
+                    \hline
+                    zx & nx & zy & ny & f & no & m=0      & m=1      \\ \hline
+                    1  & 0  & 1  & 0  & 1 & 0  & 0        &          \\
+                    1  & 1  & 1  & 1  & 1 & 1  & 1        &          \\
+                    1  & 1  & 1  & 0  & 1 & 0  & -1       &          \\
+                    0  & 0  & 1  & 1  & 0 & 0  & D        &          \\
+                    1  & 1  & 0  & 0  & 0 & 0  & A        & M        \\
+                    0  & 0  & 1  & 1  & 0 & 1  & ~D / !D  &          \\
+                    1  & 1  & 0  & 0  & 0 & 1  & ~A / !A  & ~M / !M  \\
+                    0  & 0  & 1  & 1  & 1 & 1  & -D       &          \\
+                    1  & 1  & 0  & 0  & 1 & 1  & -A       & -M       \\
+                    0  & 1  & 1  & 1  & 1 & 1  & D+1      &          \\
+                    1  & 1  & 0  & 1  & 1 & 1  & A+1      & M+1      \\
+                    0  & 0  & 1  & 1  & 1 & 0  & D-1      &          \\
+                    1  & 1  & 0  & 0  & 1 & 0  & A-1      &          \\
+                    0  & 0  & 0  & 0  & 1 & 0  & D+A      & D+M      \\
+                    0  & 1  & 0  & 0  & 1 & 1  & D-A      & D-M      \\
+                    0  & 0  & 0  & 1  & 1 & 1  & A-D      & M-D      \\
+                    0  & 0  & 0  & 0  & 0 & 0  & D\ \&\ A & D\ \&\ M \\
+                    0  & 1  & 0  & 1  & 0 & 1  & D\ |\ A  & D\ |\ M  \\ \hline
+                \end{tabular*}
+            \end{table}
+        \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.45\textwidth}
+            \centering
+            \begin{table}[H]
+                \caption*{Destination Symboltabelle}
+                \begin{tabular}{lll}
+                    M: Memory[A] & D: D-Register & A: A-Register \\
+                \end{tabular}
+
+                \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|c|CCC|l|}
+                    \hline
+                    Symbol & d_1 & d_2 & d_3 & Speicherort                         \\ \hline
+                    -      & 0   & 0   & 0   & Keine Speicherung                   \\
+                    M      & 0   & 0   & 1   & Memory[A]                           \\
+                    D      & 0   & 1   & 0   & D Register                          \\
+                    MD     & 0   & 1   & 1   & Memory[A] \& D-Register             \\
+                    A      & 1   & 0   & 0   & A-Register                          \\
+                    AM     & 1   & 0   & 1   & A-Register \& Memory[A]             \\
+                    AD     & 1   & 1   & 0   & A-Register und D-Register           \\
+                    AMD    & 1   & 1   & 1   & A-Reg., Memory[A] \& D-Reg. \\ \hline
+                \end{tabular*}
+            \end{table}
+            \begin{table}[H]
+                \caption*{Jump Symboltabelle}
+                \begin{tabular}{lll}
+                    E: EQUAL & G: GREATER & L: LOWER \\
+                \end{tabular}
+
+                \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|c|CCC|l|}
+                    \hline
+                    Symbol & j_2 & j_1 & j_0 &   Sprunkbedingung          \\ \hline
+                    -      & 0   & 0   & 0   & Spring niemals             \\
+                    JGT    & 0   & 0   & 1   & Spring falls $out > 0$     \\
+                    JEQ    & 0   & 1   & 0   & Spring falls $out=0$       \\
+                    JGE    & 0   & 1   & 1   & Spring falls $out\geq 0$   \\
+                    JLT    & 1   & 0   & 0   & Spring falls $out < 0$     \\
+                    JNE    & 1   & 0   & 1   & Spring falls $out \not= 0$ \\
+                    JLE    & 1   & 1   & 0   & Spring falls $out \leq 0$  \\
+                    JMP    & 1   & 1   & 1   & Spring immer               \\ \hline
+                \end{tabular*}
+            \end{table}
+        \end{minipage}
+    \end{figure}
+\end{samepage}
+
+
+\end{document}
