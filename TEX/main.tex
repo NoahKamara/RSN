@@ -56,9 +56,8 @@
 \cfoot{\thepage}
 
 % Titles
-\titleformat{\section}[display]{\normalfont\bfseries}{}{0pt}{\Huge}
-
-
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
 
 % -------- MATH MODE -------------------------------------------------------
 % Math Mode Table Columns
@@ -170,14 +169,14 @@
 \begin{defbox}[Boolesche Funktionen]
   Eine Boolesche Funktion ist eine Funktion $f : \{0, 1\}n \rightarrow \{0, 1\}, n \geq 0$.
   Die Anzahl $n$ der Argumente der Funktion $f$ heißt ihre Stelligkeit (arity).
-
+  
   Für kleine Stelligkeiten gibt es Spezielle Ausdrücke:
   \begin{itemize}
     \item $n=1$: \textbf{unär} (unary)
     \item $n=2$: \textbf{binär} (binary)
     \item $n=3$: \textbf{ternär} (ternary)
   \end{itemize}
-
+  
   Boolesche Funktionen werden durch \textbf{Schaltnetze} implementiert.
 \end{defbox}
 
@@ -217,7 +216,7 @@ Jede Boolesche Funktion kann durch \textbf{Wahrheitstafeln} und \textbf{Formeln 
       \item[$\rightarrow$] Darstellung der Minterme
       \item[$\rightarrow$] Sum of Products (SOP)
     \end{itemize}
-    Bilde \textit{Disjunktion der Konjunktionen} aus Literalen aus jeder Zeile in der der Funktionswert 0 ist
+    Bilde \textit{Disjunktion der Konjunktionen} aus Literalen aus jeder Zeile in der der Funktionswert 1 ist
   \end{minipage}
   \hfill
   \begin{minipage}{0.46\textwidth}
@@ -226,7 +225,7 @@ Jede Boolesche Funktion kann durch \textbf{Wahrheitstafeln} und \textbf{Formeln 
       \item[$\rightarrow$] Darstellung der Maxterme
       \item[$\rightarrow$] Product of Sums (POS)
     \end{itemize}
-    Bilde \textit{Konjunktion der Disjunktionen} aus Literalen aus jeder Zeile in der der Funktionswert 1 ist
+    Bilde \textit{Konjunktion der Disjunktionen} aus Literalen aus jeder Zeile in der der Funktionswert 0 ist
   \end{minipage}
 \end{figure}
 
@@ -252,117 +251,25 @@ Da sowohl die disjunktive als auch die konjunktive Normalform nur die Operatione
 \subsection{Implementierung}
 Boolesche Funktionen werden mit Hilfe der Gatterlogik implementiert. 
 Das heißt, mehrere elementare Gatter werden zusammengeschaltet, um komplexe Boolesche Funktionen zu berechnen:
-% TODO Elementare Gatter & Zusammengesetze Gatter
 
-\subsubsection{Vollständige Operationenmengen}
-% TODO NAND, zeige Vollständigkeit
-
-\subsubsection{Datenflußsteuerung}
-Wir können den Fluss von Daten mit sogenannten Steuerleitungen kontrollieren:
-Wir nehmen an:
-\begin{itemize}
-  \item Datensignal $d$ läuft auf einer \textit{Datenleitung} $D$
-  \item Steuersignal $c$ läuft auf einer \textit{Steuerleitung} $C$
-\end{itemize}
-
-Nur wenn auf Steuerleitung $C$ eine logische 1 anliegt, soll das Datensignal weitergeleitet werden.
-Das ist mit einem AND-Gatter einfach zu implementieren: 
-% REPLACE FROM HERE
-Wir benutzen ein AND-Gatter und verbinden D und C zu einem gemeinsamen Ausgangssignal, 
-an dem dann eine logische 1 anliegt, wenn an Datenleitung D eine 1 anliegt und Steuerleitung C 
-ebenfalls auf 1 steht
-% TODO REPLACE DRAWING 
-
-\subsection{Multiplexer (Auswahlschaltung)}
-01 - 31ff
-
-\subsection{2-Bit-Dekodierer}
-
-
-
-\section{Implementierung von Schaltnetzen}
-\begin{defbox}
-  Durch elektronische Bauteile, speziell (Feldeffekt-)Transistoren, werden spannungsgesteuerte Schalter dargestellt.
-  aus mehreren Schaltern werden dann Gatter zusammengesetzt, die einfache Boolesche Funktionen darstellen.
-  Die Gatter bilden jeweils eine vollständige Operationenmenge.
-\end{defbox}
-
-\subsection{Elektronische Grundlagen}
-\subsubsection{Schalter}
-Um Gatter zu implementieren werden Schalter benötigt, die automatisch betätigt werden können. Hierzu gibt es nun mehrere Ansätze:
-\begin{itemize}
-  \item Erste Lösung: \textit{Relais}: (elektromechanische/magnetische
-        Schalter)\\
-        Relativ groß, hoher Stromverbrauch, Mechanisch und deshalb Störungsanfällig
-
-  \item Bessere Lösung: \textit{Vakuumröhren}: (Verstärkerröhren) \\
-        Immernoch groß aber geringerer Stromverbrauch
-
-  \item Entscheidente Verbesserung: \textit{Transistoren}: (Halbleiterschalter/verstärker) \\
-        Sehr klein \& kleiner Stromverbrauch
-
-\end{itemize}
-
-
-\subsubsection{Transistoren}
-\begin{figure}[H]
-  \begin{minipage}{0.45\textwidth}
-    \textbf{Bipolartransistor}
-    \par (bipolar junction transistor)
-    \begin{itemize}
-      \item[$\rightarrow$] 3 Anschlüsse:
-            \begin{itemize}
-              \item Basis (base)
-              \item Emitter (emitter)
-              \item lektor (collector)
-            \end{itemize}
-      \item[$\rightarrow$] stromgesteuert
-
-            Kleiner Steuerstrom auf der Basis-Emitter-Strecke steuert großen Strom auf Kollektor-Emitter-Strecke.
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.45\textwidth}
-    \textbf{Feldeffekttransistor}
-    \par (field effect transistor)
-    \begin{itemize}
-      \item[$\rightarrow$] 3 Anschlüsse:
-            \begin{itemize}
-              \item Quelle (source)
-              \item Senke (drain)
-              \item Steuerelektrode (gate)
-            \end{itemize}
-      \item[$\rightarrow$] spannungsgesteuert
-
-            Der Widerstand und somit der Strom der Drain-Source-Strecke wird durch die Gate-Source-Spannung gesteuert. Im statischen Fall fasst Stromlos
-    \end{itemize}
-  \end{minipage}
-\end{figure}
-
-$\rightarrow$ Wir beschränken uns im Folgenden auf Feldeffekttransistoren, da diese für Rechnertechnik (und speziell für integrierte Schaltunngen) wesentlich wichtiger sind
-
-
-\subsubsection{Feldeffekttransistoren}
-%TODO: CONTINUE WITH 01 - Schaltungstechnik I p34
-
-\subsubsection{Transistorschalter}
-
-
+Durch elektronische Bauteile, speziell (Feldeffekt-)Transistoren, werden spannungsgesteuerte Schalter dargestellt.
+aus mehreren Schaltern werden dann Gatter zusammengesetzt, die einfache Boolesche Funktionen darstellen.
+Die Gatter bilden jeweils eine vollständige Operationenmenge.
 
 
 \chapter{Schaltungstechnik II}
 \section{Minimierung Boolescher Formeln}
 \begin{defbox}[Semantische \& Syntaktische Äquivalenz]
   Seien $\varphi$ und $psi$ Boolesche Formeln, dann gilt:
-
+  
   \begin{itemize}
     \item Wenn beide Formeln für alle Belegungen den gleichen Wahrheitswert haben, dann sind die Formeln
-
+          
           \center{\textit{Semantische äquivalent}: $\varphi \equiv \psi$}
-
-
+          
+          
     \item Wenn $\varphi$ durch Äquivalenzumformungen in $\psi$ umgeformt werden kann, dann sind die Formeln
-
+          
           \center{\textit{Syntaktische äquivalent}: $\varphi = \psi$}
   \end{itemize}
 \end{defbox}
@@ -392,75 +299,42 @@ Besser wäre ein systematisches Vereinfachungsverfahren.
   \end{itemize}
 \end{defbox}
 
-\begin{exbox}[Zwei Variablen]
-  \begin{minipage}{0.6\textwidth}
-    Ein Gray-Code für zwei Variablen:
-
-    Anordnung ist bis auf zyklische Vertauschungen und Spiegelungen eindeutig.
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.3\textwidth}
-    \begin{tabular}{cccc}
-      00 & 01 & 11 & 10 \\
-      01 & 11 & 10 & 00 \\
-      11 & 10 & 00 & 01 \\
-      10 & 00 & 11 & 10 \\
-    \end{tabular}
-  \end{minipage}
-\end{exbox}
 Sind zwei benachbarte Felder eines Karnaugh-Veitch-Diagramms beide 1, so zeigt dies an, dass eine bestimmte Variable in der ursprünglichen Funktion irrelevant ist.
 Beim Zusammenfassen von Feldern darf auch der Rand überschritten werden, da sich auch in diesem Fall der Wert nur einer Variable ändert:
 Wie oben gezeigt können auch mehr als 2 Felder Zusammengefasst werden, jedoch nur, wenn die Felderzahlen Zweierpotenzen sind.
-
-\begin{figure}[h]
-  \caption{Beispiel für Karnaugh-Veitch-Diagramms}
-  \centering
-  \includegraphics[width=\textwidth]{karnaugh-veitch-example01}
-\end{figure}
 
 
 \begin{enumerate}
   \item \textbf{Schritt:}
         Finde alle maximalen Zusammenfassungen von Feldern
-
+        
         (dürfen überlappen, aber nicht in größeren Zusammenfassungen vorkommen)
-
+        
         \begin{center}
           \includegraphics[scale=1]{karnaugh-veitch-step_01}
         \end{center}
-
-
+        
+        
   \item \textbf{Schritt:}
         Wähle möglichst wenige Zusammenfassungen, die alle Einsen abdecken
-
+        
         \begin{center}
           \includegraphics[scale=1]{karnaugh-veitch-step_02}
         \end{center}
-
-
+        
+        
   \item \textbf{Schritt:}
         Sammle die benötigten Ausdrücke:
-        \begin{multicols}{2}
-          \begin{align*}
-            0 & = \color{red}{(A \wedge \overline{C})}              \\
-              & \vee \color{green}{(A \wedge B)}                    \\
-              & \vee \color{blue}{(B \wedge C \wedge \overline{D})}
-          \end{align*}
-          \columnbreak
-          \includegraphics[scale=1]{karnaugh-veitch-step_03}
-        \end{multicols}
+        
+        \includegraphics[scale=1]{karnaugh-veitch-step_03}
+        
+        \begin{math}
+          \color{red}{(A \wedge \overline{C})}
+          \vee \color{green}{(A \wedge B)}
+          \vee \color{blue}{(B \wedge C \wedge \overline{D})}
+        \end{math}
 \end{enumerate}
 
-\begin{infobox}
-  Natürlich kann die Minimierung nicht nur durch Zusammenfassen von Einsen, sondern, 
-  unter Rückgriff auf die Dualität der Booleschen Gesetze bzw. 
-  die Dualität der disjunktiven und der konjunktiven Normalform, 
-  auch durch Zusammenfassen von Nullen durchgeführt werden.
-
-  Da das Ergebnis eine Konjunktion von Disjunktionen ist (analog zur konj. Normalform) 
-  müssen die Variablenwerte, 
-  die die Zusammenfassungen beschreiben negiert werden
-\end{infobox}
 \subsubsection{Quine-McCuskey-Algorithmus}
 Eine Minimierung logischer Funktionen mit bis zu sechs Argumenten ist zwar mit erweiterten 
 Karnaugh-Veitch-Diagrammen im Prinzip möglich, aber unhandlich. Ein besserer Weg besteht 
@@ -473,36 +347,33 @@ in der Verwendung eines anderen Verfahrens des \textbf{Quine-McClunskey-Algorith
           \item Vereinige Terme, in denen eine einzelne Variable
                 in dem einen Term als positives, im anderen als negatives Literal auftritt.
                 (Der gleiche Term darf für mehrere Vereinigungen verwendet werden.)
-
+                
                 \begin{align*}
-                  (A_1 ... A_i ... A_n) \vee (A_1 ... \overline{A_i} ... A_n)
-                   & = A_1 ... A_{i-1} A_{i+1} ... A_n \wedge (A_i \vee \overline{A_i})  \\
-                   & = A_1 ... A_{i-1} A_{i+1} ... A_n \wedge 1                          \\
-                   & = A_1 ... A_{i-1} A_{i+1} ... A_n                                  
+                  (A_1 ... A_i ... A_n) \vee (A_1 ... \overline{A_i} ... A_n) = A_1 ... A_{i-1} A_{i+1} ... A_n                                  
                 \end{align*}
           \item Wiederhole dies Rekursiv mit den Vereinigungsergebnissen, bis keine weiteren Vereinigungen mehr möglich sind.
           \item Vernachlässige alle Terme, die mit anderen Vereinigt wurden.
           \item Übrig bleiben die sogenannten \textbf{Primimplikanten}
         \end{itemize}
-
+        
         \begin{figure}[H]
           \caption{Tabelle zur bestimung von Primimplikanten}
           \label{fig:Quine–McCluskeyAlgorithmus_step_01}
           \centering
           \includegraphics[width=\textwidth]{Quine–McCluskeyAlgorithmus_step_01}
         \end{figure}
-
+        
   \item \textbf{Schritt:} Aufstellen und Auswerten der Primimplikantentabelle
         \begin{itemize}
           \item Spalten: Minterme, Zeilen: Primimplikanten
           \item Finde wesentliche Primimplikanten (aufsuchen der Spalten mit nur einer Markierung)
-
+                
                 Eine systematische Methode für diese Auswahl von Primimplikanten ist \textbf{Petricks Algorithmus}
         \end{itemize}
         \begin{center}
           \includegraphics[scale=1]{Quine–McCluskeyAlgorithmus_step_02}
         \end{center}
-
+        
         \begin{itemize}
           \item[\color{red} $\bullet$ ] Abdeckung nur durch einen Primimplikanten $\rightarrow$ wesentlich
           \item[\color{blue} $\bullet$ ] Abdeckung auch durch wesentliche Primimplikanten.
@@ -514,7 +385,7 @@ in der Verwendung eines anderen Verfahrens des \textbf{Quine-McClunskey-Algorith
 \begin{infobox}
   Primimplikanten des Quine-McCluskey-Algorithmus entsprechen 
   Feld-Zusammenfassungen in Karnaugh-Veitch-Diagrammen.
-
+  
   Dementsprechend gibt es auch wesentliche Zusammenfassungen in Karnaugh-Veitch-Diagrammen. 
   (Feldergruppen, die von keiner der anderen Gruppen abgedeckt werden)
 \end{infobox}
@@ -541,26 +412,26 @@ um die verbleibenden Minterme abzudecken.
 
 \begin{enumerate}
   \item \textbf{Schritt:} Bilde eine reduzierte Primimplikantentabelle
-
+        
         Diese enthält nur noch die noch nicht abgedeckten Minterme und die nicht wesentlichen Primimplikanten.
-
+        
   \item \textbf{Schritt:} Ordne jedem Primimplikanten eine Auswahlvariable $P_i$ zu.
-
+        
   \item \textbf{Schritt:} Bilde für jeden Minterm (Spalte) die Disjunktion der Auswahlvariablen.
-
+        
         Alle Primimplikanten, die diesen Minterm abdecken werden mit einer Disjunktion verknüpft.
-
+        
   \item \textbf{Schritt:} Verknüpfe alle Disjunktionen zu einer Konjunktion $C$.
-
+        
   \item \textbf{Schritt:} Wandle Konjunktion $C$ durch die Distributivgesetze in eine Disjunktion $D'$ um
-
+        
         Nun ergibt sich eine Disjunktion aus Konjunktionen, die jeweils alle Minterme abdecken.
         $$(P_1 \wedge P_2 \wedge P_3) \vee (P_2 \wedge P_3 \wedge P_4) \vee (P_3 \wedge P_5)$$
-
+        
   \item \textbf{Schritt:} Wähle die Konjunktionen aus $D'$, mit den wenigsten Primimplikanten
-
+        
         $P_3 \wedge P_5$
-
+        
 \end{enumerate}
 
 \begin{figure}[H]
@@ -625,28 +496,22 @@ Alle Boolesche Formeln können in diese Form gebracht werden, denn es handelt si
 
 
 
-\subsection{Allgemeine Struktur}
-Jede Funktion in disjunktiver Normalform kann durch eine Standard-Gatterstruktur dargestellt werden:
-\begin{itemize}
-  \item Einem NOT-Gatter (Inverter), sodass für jede Eingabe negiert und unnegiert zur verfügung steht.
-  \item Einem AND-Array, zur Berechnung der Konjunktionen
-  \item Einem OR-Array, zur disjunktiven Verknüpfung der Konjunktionen
-\end{itemize}
-
 
 \subsection{Hardware-Implementation}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \begin{minipage}[t]{0.45\textwidth}
     \caption{Originale Darstellung von Schaltungen}
-    \includegraphics[height=\textwidth]{PLA_implementation}
+    \includegraphics[height=0.8\textwidth]{PLA_implementation}
+    
     Bei Auslieferung sind Logikarrays komplett verbunden (an jedem UND-Gatter liegen alle negierte und unnegierte Eingaben an).
     Beim "programmieren" des Logikarrays werden die rot markierten Verbindungen getrennt
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.45\textwidth}
     \caption{Vereinfachte Darstellung von Schaltungen}
-    \includegraphics[height=\textwidth]{PLA_implementation_simplification}
+    \includegraphics[height=0.8\textwidth]{PLA_implementation_simplification}
+    
     Zur Vereinfachung stellt man nur eine Linie je Gatter dar und markiert die \textbf{Verbindungen}
   \end{minipage}
 \end{figure}
@@ -654,58 +519,6 @@ Jede Funktion in disjunktiver Normalform kann durch eine Standard-Gatterstruktur
 Für eine elektronische Implementierung (durch Transistoren) sind AND- und OR-Gatter nicht besonders gut geeignet.
 Besser geeignet sind NAND- und NOR-Gatter (und ggf. NOT-Gatter).
 
-
-\section{Hardware-Beschreibungssprache}
-\begin{defbox}[Hardware-Beschreibungssprache]
-  Eine formale Sprache, mit der Operationen von integrierten Schaltungen und ihr Design beschrieben sowie in Simulationen getestet werden können.
-  \begin{itemize}
-    \item Spezifieren von dem Verhalten von Bausteinen (Schnittstelle), sowie Implementierung aus Elementargattern.
-    \item Simulator kann Elementargatter (und damit inderekt alle aus diesen zusammengesetzten Bausteine) simulieren
-    \item Simuliertes Verhalten kann automatisch mit Schnittstelle verglichen werden (\textit{automatische Fehlerüberprüfung})
-  \end{itemize}
-\end{defbox}
-
-\subsection{Aufbau}
-Hardware-Beschreibung eines Bauteils durch drei Dateien:
-\begin{itemize}
-  \item $*.cmp$ Beschreibung der Schnittstelle durch Ein-/Ausgabetupel
-  \item $*.hdl$ Beschreibung der Implementierung durch Gatterzusammenschaltung
-  \item $.tst$ Befehle zum Durchführen eines Funktionstests
-\end{itemize}
-
-% And.cmp
-% a b out
-% 0 0 0
-% 0 1 0
-% 1 0 0
-% 1 1 1
-
-% And.hdl
-% CHIP And
-% { IN a, b;
-% OUT out;
-% IN a, b;
-% OUT out;
-% PARTS:
-% Nand(a = a, b = b, out = x);
-% Not(in = x, out = out);
-% }
-
-% load And.hdl,
-% output-file And.out,
-% compare-to And.cmp,
-% output-list a b out;
-% set a 0, set b 0, eval, output;
-% set a 0, set b 1, eval, output;
-% set a 1, set b 0, eval, output;
-% set a 1, set b 1, eval, output;
-
-LESEN:\\
-The Elements of Computing Systems: Building a Modern Computer from First Principles\\
-Noam Nisan \& Shimon Schocken\\
-MIT Press, Cambridge, MA, USA 2008\\
-Bearbeiten: http://www1.idc.ac.il/tecs/projects/01/index.htm
-66\\
 
 \chapter{Binärarithmetik \& Ihre Implementierung}
 \section{Erinnerung: Arithmetik}
@@ -721,12 +534,12 @@ $$0,\ 1,\ 2,\ 3,\ 4,\ 5,\ 6,\ 7,\ 8,\ 9,\ A,\ B,\ C,\ D,\ E,\ F$$
 \begin{figure}[H]
   \begin{minipage}[t]{.45\textwidth}
     Addition und Subtraktion kann sehr leicht stellenweise in einem Stellensystem ausgeführt werden.
-
+    
     Einziges Problem ist die Behandlung von \textit{Stellenüberlauf} und \textit{Stellenunterlauf}. 
     In diesen Fällen entsteht ein \textit{Übertrag}.
-
+    
     Diese Rechenschemata sind nicht nur im Dezimalsystem, sondern im Prinzip in jedem Zahlensystem anwendbar.
-
+    
   \end{minipage}
   \begin{minipage}[t]{.45\textwidth}
     \centering
@@ -747,11 +560,11 @@ $$0,\ 1,\ 2,\ 3,\ 4,\ 5,\ 6,\ 7,\ 8,\ 9,\ A,\ B,\ C,\ D,\ E,\ F$$
 \subsection{Multiplikation und Division}
 \begin{figure}[H]
   \begin{minipage}[t]{.4\textwidth}
-
+    
     Die Multiplikation wird auf eine Summe von Stellenprodukten zurückgeführt.    
-
+    
     Hierin besteht das Hauptproblem darin, den richtigen Stellenfaktor zu bestimmen. 
-
+    
     Meist wird er geschätzt, anschließend ausprobiert und gegebenenfalls die Schätzung korrigiert.
   \end{minipage}
   \hfill
@@ -773,7 +586,7 @@ $$0,\ 1,\ 2,\ 3,\ 4,\ 5,\ 6,\ 7,\ 8,\ 9,\ A,\ B,\ C,\ D,\ E,\ F$$
 \end{figure}
 
 
-\section{Binäre Arithmetik und Implementierung durch Schaltkreise}
+\section{Binärearithmetik und Implementierung}
 Die beiden Ziffern des Binärsystems können direkt durch Schalter Implementiert werden 
 ($0$: offen (falsch), $1$: geschlossen (wahr))
 
@@ -781,30 +594,12 @@ Die beiden Ziffern des Binärsystems können direkt durch Schalter Implementiert
 Die Addition ist die einfachste und am häufigsten verwendete Operation in der arithmetisch-logischen Einheit,
 da sie sich direkt in Wahrheitstafeln übersetzen lassen:
 
-\begin{figure}[H]
-  \begin{minipage}[t]{.7\textwidth}
-    An der Addition von zwei Bits mit Wert $1$ zeigt, 
-
-    warum wir für den Ein-Bit-Addierer zwei Ausgänge benötigen:
-    \begin{itemize}
-      \item Die \textit{Summe} (sum, s)
-      \item Den \textit{Übertrag} (carry, c)
-    \end{itemize}
-    Die bitweise Addition kann offenbar auch durch (Logik-)gatter implementiert werden.
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{.2\textwidth}
-    \begin{tabular}{|LL|LL|}
-      \hline
-      x & y & s & c \\ \hline
-      0 & 0 & 0 & 0 \\ \hline
-      1 & 0 & 1 & 0 \\ \hline
-      0 & 1 & 1 & 0 \\ \hline
-      1 & 1 & 0 & 1 \\ \hline
-    \end{tabular}
-  \end{minipage}
-  \hfill
-\end{figure}
+An der Addition von zwei Bits mit Wert $1$ zeigt, warum wir für den Ein-Bit-Addierer zwei Ausgänge benötigen:
+\begin{itemize}
+  \item Die \textit{Summe} (sum, s)
+  \item Den \textit{Übertrag} (carry, c)
+\end{itemize}
+Die bitweise Addition kann offenbar auch durch (Logik-)gatter implementiert werden.
 
 
 \subsection{Halbaddierer}
@@ -812,7 +607,7 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
   \begin{minipage}[t]{.45\textwidth}
     Wegen der möglichkeit eines Übertrags benötigt man für die Addition nicht nur eine Boolesche Funktion, 
     sondern zwei (wobei die zweite den Übetrag bestimmt)
-
+    
     \begin{center}
       $c = x \wedge y$ $s = (x \wedge \overline{y}) \vee (y \wedge \overline{x})$
     \end{center}
@@ -827,30 +622,10 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
 
 \begin{figure}[H]
   \begin{minipage}[t]{.45\textwidth}
-    Verknüpfung der beiden Funktionen erlaubt eine Implementierung mit weniger Gattern:
-    $$s = (x \wedge \overline{(x \wedge y)} \vee (y \wedge \overline{(x \wedge y)}))$$
-    \begin{center}
-      \small (Ableitbar über Axiome)
-    \end{center}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{.45\textwidth}
-    \caption{Halbaddierer mit weniger Gattern}
-    \centering
-    \includegraphics{halbaddierer_02}
-  \end{minipage}
-\end{figure}
-
-\begin{figure}[H]
-  \begin{minipage}[t]{.45\textwidth}
-    Durch weiteres Ausnutzen der Booleschen Gesetze zur Vereinfachung und
+    Verknüpfung der beiden Funktionen erlaubt eine Implementierung mit weniger Gattern, 
+    weiteres Ausnutzen der Booleschen Gesetze zur Vereinfachung und
     durch Nutzung anderer, zusammengesetzter Gatter ergibt sich dann eine deutlich kleinere Schaltung:
-    \begin{align*}
-      \centering
-      s 
-       & = (x \wedge \overline{y}) \vee (\overline{x} \wedge y) \\
-       & = x \oplus y                                           \\
-    \end{align*}
+    $$ s = (x \wedge \overline{y}) \vee (\overline{x} \wedge y) = x \oplus y $$
   \end{minipage}
   \hfill
   \begin{minipage}[t]{.45\textwidth}
@@ -865,10 +640,8 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
 \begin{figure}[H]
   \begin{minipage}[t]{.45\textwidth}
     Um Addition nicht nur für ein Bit, sondern für $n$ Bits, $n\geq2$, zu implementieren,
-    braucht man einen
-
-    \par \textit{Addierer mit drei Eingängen}:
-
+    braucht man einen \textit{Addierer mit drei Eingängen}, um den Übertrag der vorangehenden Addition zu berücksichtigen.
+    
     Ein Volladdierer berücksichtigt den Übertrag einer vorangehenden Addition
   \end{minipage}
   \hfill
@@ -886,7 +659,7 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
       0 & 1 & 1      & 0 & 1       \\
       1 & 1 & 1      & 1 & 1       \\ \hline 
     \end{tabular}
-
+    
   \end{minipage}
 \end{figure}
 
@@ -913,8 +686,6 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
 \end{defbox}
 \begin{figure}[H]
   \begin{minipage}[t]{.45\textwidth}
-    ein $n$-Bit-Übertr.kette-Addierer (carry ripple adder) für $C = A + B$
-    kann leicht aus $n$ Volladdierern zusammengesetzt werden\\
     \par \textit{Probleme}:
     \begin{itemize}
       \item Übertrag breitet sich wellenartig durch die Addiererkette aus
@@ -934,7 +705,7 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
 \begin{defbox}[Übertragsauswahl-Addierer]
   In einem $n$-Bit-Übertragsauswahl-Addierer werden die Summen des unteren Halbwortes (Bits 0 bis $\frac{n}{2}-1$) und 
   des oberen Halbwortes (Bits $\frac{n}{2}-1$ bis $n$) parallel berechnet.
-
+  
   Dadurch umgeht man die Problematik des wellenartigen Übertrags.
 \end{defbox}
 
@@ -967,7 +738,7 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
     \centering
     \paragraph{Betrag \& Vorzeichen}
     \small Höchstwertiges Bit gibt Vorzeichen an
-
+    
     \underline{Problem}: Zahlen sollten gleiche Stellenzahl aufweisen
   \end{minipage}
   \hfill
@@ -975,7 +746,7 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
     \centering
     \paragraph{Einerkomplement}
     \small Negation durch Inversion der Zahl
-
+    
     \underline{Problem}: Übertrag, Zwei Darstellungen für Null
   \end{minipage}
   \hfill
@@ -990,7 +761,7 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
 \begin{defbox}[Addierer \& Subtrahierer im 2er-Komplement]
   $n$-Bit-Subtrahierer bestehen aus eine, $n$-Bit-Addierer und Gattern, 
   die die Negationsregel implementieren.
-
+  
   \center{Idee: $A-B=A+(-B)$}
 \end{defbox}
 
@@ -1007,10 +778,10 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
 \begin{figure}[H]
   \begin{minipage}[t]{0.45\textwidth}
     \paragraph{Multiplikation} mit einer Potenz der Basis $b$ des Zahlensystems ist einfach:
-
+    
     Eine Multiplikation $b^k$ verschiebt die Ziffern um $k$ Stellen nach links.
     Die freiwerdenden niederwertigen Stellen werden auf $0$ gesetzt.
-
+    
     \begin{alignat*}{3}
        & [d_{n-1}...d_0] &  & \cdot b^k  &  & = [d_{n-1}...d_0\ 0_1 ... 0_k]_b \\
        & 482_{10}        &  & \cdot 10^2 &  & = 48200_{10}                     \\
@@ -1020,10 +791,10 @@ da sie sich direkt in Wahrheitstafeln übersetzen lassen:
   \hfill
   \begin{minipage}[t]{0.45\textwidth}
     \paragraph{Division} durch eine Potenz der Basis $b$ ist analog zur Multiplikation:
-
+    
     Eine Division durch $b^k$ verschiebt die Ziffern um $k$ Stellen nach rechts.
     Dies liefert allerdings nur den ganzzahligen Teil der Division
-
+    
     \begin{alignat*}{3}
        & [d_{n-1}...d_0] &  & \div b^k  &  & = [d_{n-1}...d_k]_b \\
        & 482_{10}        &  & \div 10^2 &  & = 4_{10}            \\
@@ -1054,12 +825,12 @@ im Binärsystem angewandt. Die Stellenprodukte werden durch Bit-Schieben berechn
   \begin{minipage}[t]{0.45\textwidth}
     Ist die k-te Stelle des Factors $A$ eins ($A_k = 1$), so wird der Factor $B$, 
     multipliziert mit dem Stellenwert $2^k$ auf das Ergebnis aufaddiert.
-
+    
     Die Multiplikation mit $2^k$ wird durch Bit-Schieben erreicht.
-
+    
     Somit wird Faktor A in eine Summe von Zweierpotenzen zerlegt:
     $$A_2 = a_3 \cdot 2^3 + a_2 \cdot 2^2 + a_1  \cdot 2^1 + a_0  \cdot 2^0 $$
-
+    
     \begin{table}[H]
       \begin{tabular}{LLLLLLLLL|LL}
                &   &   &   &   & 1 & 1 & 0 & 1 &   & (13)_{10}  \\
@@ -1071,7 +842,7 @@ im Binärsystem angewandt. Die Stellenprodukte werden durch Bit-Schieben berechn
         =      & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 &   & (130)_{10}
       \end{tabular}
     \end{table}
-
+    
     \par Beachte: Allgemein liefert die Multiplikation zweier $n$-Bit-Uahlen ein $2n$-Bit-Ergebnis
   \end{minipage}
   \hfill
@@ -1105,10 +876,10 @@ die mit negativen Zahlen besser umgehen kann: \textit{Booths Algorithmus}
   $$a = (a_1 - a_2) + (a_3 - a_4) + ... + (a_{k-1} - a_k)$$
   zu zerlegen, so dass die Multiplikation $a \cdot b$ zu:
   $$a \cdot b = a_1b - a_2b + a_3b - a_4b + ... + a_{k-1}b - a_kb$$
-
+  
   Dies ist nützlich, da eine Differenz von Zweierpotenzen einer Binärzahl mit genau einer Kette von Einsen entspricht.
   Dementsprechend benötigt der Algorithmus nur so viele Additionen, wie es Wechsel zwischen 1 und 0 (und umgekehrt 0 und 1) im Faktor A gibt.
-
+  
   \begin{align*}
     7_{10} = 00000111_2 = 1000_2 - 0001_2 = 2^3_{10} - 2^0_{10}
   \end{align*}
@@ -1130,9 +901,9 @@ die mit negativen Zahlen besser umgehen kann: \textit{Booths Algorithmus}
         =      & 1                        & 1                        & 0                        & 1                        & 1                        & 1                        & 0                        & 1                        &   & (-35)_{10} & 2^3 \cdot B - 2^0 \cdot B
       \end{tabular}
     \end{table}
-
+    
     Wir haben hier $7_{10}$ in $7_{10} = 8_{10}-1_{10} = 2^3_{10} - 2^0_{10} = 1000_2 - 0001_2$ zerlegt
-
+    
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.3\textwidth}
@@ -1157,12 +928,12 @@ Im Fall, dass der erste Faktor negativ ist, es also eine 1 als Vorzeichen gibt, 
 \end{alignat*}
 
 
-\section{Die Arithmetisch-Logische-Einheit (Arithmetic Logical Unit. ALU)}
+\section{Die Arithmetisch-Logische-Einheit (ALU)}
 \subsection{Die ALU in der Hack-Architektur}
 \begin{figure}[H]
   \begin{minipage}[t]{0.5\textwidth}
     Die Eingaben $zx$, $nx$, $ny$, $f$ und $no$ kodieren die auszuführende Operation:
-
+    
     \begin{table}[H]
       \begin{tabular}{Cl}
         zx   & Setze Eingabe $x=0$                        \\
@@ -1175,7 +946,7 @@ Im Fall, dass der erste Faktor negativ ist, es also eine 1 als Vorzeichen gibt, 
         $ng$ & Negative Flag ($ng=1 \rightarrow out < 0$)
       \end{tabular}
     \end{table}
-
+    
     Über-/Unterlauf wird ignoriert
   \end{minipage}
   \hfill
@@ -1195,7 +966,7 @@ $2^6=62$ Wahrheitstafeln ausgewählt werden, von diesen sind allerdings nur 18 r
     \begin{minipage}[t]{0.45\textwidth}
       Die Steuerbits dienen als Eingaben für Steuergatter, die zugeordneten
       Operationen bewirken.
-
+      
       Diese Steuergatter können, wie in Abb. \ref{fig:alu_steuerbits} die Eingabe oder,
       wie im Fall von $no$ die Ausgabe verändern.
     \end{minipage}
@@ -1210,39 +981,6 @@ $2^6=62$ Wahrheitstafeln ausgewählt werden, von diesen sind allerdings nur 18 r
 \end{defbox}
 
 
-\begin{table}[H]
-  \caption{Funktionen der ALU auf der Hack-Plattform}
-  \label{tbl:alu_funktionen}
-  \centering
-  \begin{tabular}{|C|C|C|C|C|C|C|}
-    \hline
-    \multicolumn{2}{|c|}{\begin{tabular}[c]{@{}c@{}}Voreinstellung \\ für Eingabe x\end{tabular}} & \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}Voreinstellung \\ für Eingabe y\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Einstellung für \\ Addition (+) \\ und \\ bitw. Und ( \& )\end{tabular} & \begin{tabular}[c]{@{}c@{}}Einstellung \\ für Output \end{tabular} & \text{ALU Output}                                                  \\ \hline
-    zx                                               & nx                                              & zy                         & ny                         & f                                          & no         & out      \\ \hline
-    zx                                               & nx                                              & zy                         & ny                         &                                            & no         &          \\
-    \downarrow                                       & \downarrow                                      & \downarrow                 & \downarrow                 & f   \rightarrow out = x + y                & \downarrow & f(x,y)   \\
-    x = 0                                            & x = -x                                          & y = 0                      & y = -y                     & \overline{f} \rightarrow out = x \ \&\   y & out = -out &          \\ \hline
-    1                                                & 0                                               & 1                          & 0                          & 1                                          & 0          & 0        \\
-    1                                                & 1                                               & 1                          & 1                          & 1                                          & 1          & 1        \\
-    1                                                & 1                                               & 1                          & 0                          & 1                                          & 0          & -1       \\
-    0                                                & 0                                               & 1                          & 1                          & 0                                          & 0          & x        \\
-    1                                                & 1                                               & 0                          & 0                          & 0                                          & 0          & y        \\
-    0                                                & 0                                               & 1                          & 1                          & 0                                          & 1          & ~x       \\
-    1                                                & 1                                               & 0                          & 0                          & 0                                          & 1          & ~y       \\
-    0                                                & 0                                               & 1                          & 1                          & 1                                          & 1          & -x       \\
-    1                                                & 1                                               & 0                          & 0                          & 1                                          & 1          & -y       \\
-    0                                                & 1                                               & 1                          & 1                          & 1                                          & 1          & x+1      \\
-    1                                                & 1                                               & 0                          & 1                          & 1                                          & 1          & y+1      \\
-    0                                                & 0                                               & 1                          & 1                          & 1                                          & 0          & x-1      \\
-    1                                                & 1                                               & 0                          & 0                          & 1                                          & 0          & y-1      \\
-    0                                                & 0                                               & 0                          & 0                          & 1                                          & 0          & x+y      \\
-    0                                                & 1                                               & 0                          & 0                          & 1                                          & 1          & x-y      \\
-    0                                                & 0                                               & 0                          & 1                          & 1                                          & 1          & y-x      \\
-    0                                                & 0                                               & 0                          & 0                          & 0                                          & 0          & x\ \&\ y \\
-    0                                                & 1                                               & 0                          & 1                          & 0                                          & 1          & x\ |\ y  \\ \hline
-  \end{tabular}
-\end{table}
-\subsection{Einbindung der ALU in den Prozessor der Hack-Architektur}
-
 
 \chapter{Sequentielle Logik}
 \section{Sequentielle Logik}
@@ -1250,18 +988,18 @@ $2^6=62$ Wahrheitstafeln ausgewählt werden, von diesen sind allerdings nur 18 r
 \begin{figure}[H]
   \begin{minipage}[t]{0.48\textwidth}
     \paragraph{Kombinatorische Logik}
-
+    
     \centering
-
+    
     \includegraphics[width=\textwidth]{kombinatorische_logik}
-
+    
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.48\textwidth}
     \paragraph{Sequentielle Logik}
-
+    
     \centering
-
+    
     \includegraphics[width=\textwidth]{sequentielle_logik}
   \end{minipage}
 \end{figure}
@@ -1270,7 +1008,7 @@ $2^6=62$ Wahrheitstafeln ausgewählt werden, von diesen sind allerdings nur 18 r
   \begin{minipage}[t]{0.48\textwidth}
     \centering
     \underline{Implementierung: Schaltnetze}
-
+    
     \begin{itemize}
       \item Einfaches Berechnen von Ein- \& Ausgaben
       \item Keine Informationsspeicherung
@@ -1282,14 +1020,14 @@ $2^6=62$ Wahrheitstafeln ausgewählt werden, von diesen sind allerdings nur 18 r
   \begin{minipage}[t]{0.48\textwidth}
     \centering
     \underline{Implementierung: Schaltwerke}
-
+    
     \begin{itemize}
       \item Rückkopplung von Ausgaben auf Eingaben
       \item Explizite Informationsspeicherung
       \item Unterscheidung von Zuständen
       \item Gatterlaufzeiten explizit berücksichtigt
     \end{itemize}
-
+    
   \end{minipage}
 \end{figure}
 
@@ -1370,18 +1108,18 @@ das bestimmt, wann Eingaben übernommen werden.
   \begin{minipage}[t]{0.45\textwidth}
     \paragraph{Taktzyklus / -periode (Cycle / Period)} $T$:
     \par Zeit zwischen steigenden/fallenden Flanke und der nächsten\\
-
+    
     \paragraph{Taktfrequenz (Frequency)} $f$:
     \par Reziprokwert der Taktperiode $T$\\
-
+    
     \paragraph{Taktbreite (Width)}:
     \par Die Zeit zwischen einer steigenden und fallenden Flanke 
     (kann aber muss nicht die Hälfte der Taktperiode sein)\\
-
+    
     \paragraph{Taktpegel / Taktzustand}:
     \par 1-Pegel (Versorgungsspannung, high) und 0-Pegel (Masse, low) - 
     Unterscheidung der Phasen im Taktzyklus\\
-
+    
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.45\textwidth}
@@ -1389,7 +1127,7 @@ das bestimmt, wann Eingaben übernommen werden.
     \begin{center}
       \includegraphics[width=\textwidth]{taktsignal_01}
     \end{center}
-
+    
     \begin{center}
       \includegraphics[width=\textwidth]{taktsignal_02}
     \end{center}
@@ -1426,7 +1164,7 @@ das bestimmt, wann Eingaben übernommen werden.
   Eine \textit{bistabile Kippstufe}, auch \textit{bistabiles Kippglied} oder \textit{Riegel},
   ist eine rückgekoppelte Schaltung aus zwei NOR- oder zwei NAND-Gattern mit zwei Ein- und Ausgängen 
   (auch speziell \textit{SR-Riegel} genannt), die zwei Stabile (daher bistabile) und einen metastabilen Zusstand hat.
-
+  
   \par Oft wird einfach (aber ungenau) von \textit{FlipFlop} gesprochen
 \end{defbox}
 \begin{figure}[H]
@@ -1486,18 +1224,18 @@ in dem die Kippstufe ihren Zustand beibehält
   \begin{minipage}[t]{0.45\textwidth}
     \centering
     Die Eingabe
-
+    
     $S=1, R=0$ (NAND: $\overline{S} = 0,\ \overline{R} = 1$)
-
+    
     kann als Setzen (set) interpretiert werden \\ \ 
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.45\textwidth}
     \centering
     Die Eingabe 
-
+    
     $S=0, R=1$ (NAND: $\overline{S} = 1,\ \overline{R} = 0$) 
-
+    
     kann als Rücksetzen (reset) interpretiert werden
   \end{minipage}
 \end{figure}
@@ -1545,13 +1283,13 @@ Die Kippstufe bleibt in diesem Zustand, bis eine Eingabe die Oberhand gewinnt un
 \begin{infobox}
   Bistabile Kippstufen können durch ihre beiden stabilen Zustände ein Bit speichern,
   aber der metastabile Zustand ist problematisch.
-
+  
 \end{infobox}
 
 \begin{exbox}[Anwendung - Prellfreier Schalter/Taster]
   Bei elektromagnetischen Schaltern kommt es durch mechanische Störeffekte oft zu einem sogenannten Prellen des Schalters.
   Statt eines sofortigen Schaltensch, kommt es kurzzeitig zu mehrfachem.
-
+  
   \par Wird an die Schalterkontakte eine bistabile Kippstufe angeschlossen, so wird das Prellen unterdrückt,
   da ein mehrfaches Eingangssignal nur einmalig zu einer Zustandsänderung führt.
   \begin{figure}[H]
@@ -1613,7 +1351,7 @@ Durch anlegen eines Taktsignals, können Riegel ihre Eingaben bedingt sperren, s
       \item Sperrt Eingaben bedingt, so dass $S=R=1$ im Sperrzustand keinen Schaden mehr anrichten kann
       \item Man beachte, dass die NAND-Form keine negierten Eingaben mehr hat!
     \end{itemize}
-
+    
     Zusätzliches Sicherstellen von $R = \neg S$ ergibt den \textit{sperrbaren D-Riegel}:
     \begin{figure}[H]
       \caption{Sperrbarer D-Riegel}
@@ -1664,16 +1402,16 @@ Besser wäre eine Übernahme der Eingaben an der steigenden Flanke: Die Taktflan
 \begin{defbox}[Taktflankensteuerung]
   Taktflankensteuerung löst das Problem der Taktpegelsteuerung, bei dem die Eingaben 
   während der gesamten 1-Phase des Taktes eine Wirkung auf den Zustand des Riegels ausüben.
-
+  
   Bei Taktflankensteuerung spricht man nicht mehr von Riegel (dieser ist direkt oder taktpegelgesteuert), sondern von \textit{FlipFlop}
 \end{defbox}
 
 \begin{figure}[H]
   \begin{minipage}[t]{0.45\textwidth}
     Durch die Nutzung von NOT-Gattern (Invertern) können Signale verzögert werden (Verzögerungsglieder).
-
+    
     Verbindet man diese mit einem AND-Gatter, bilden sie ein \textit{Impulsglied}
-
+    
     Dadurch wird aus einer Taktflanke ein kurzer \textit{Taktimpuls} erzeugt
   \end{minipage}
   \hfill
@@ -1716,10 +1454,10 @@ bevor die nachfolgende Stufe die Eingabeauswertung abgeschaltet hat. (Gatterlauf
   Beim \textit{Master-Slace-Prinzip} werden zwei Riegel hintereinandergeschaltet. 
   Der erste (vordere) Riegel (Master) wertet seine Eingaben während des 1-Taktpegels, 
   der zweite (hintere) Riegel (Slave) wertet seine Eingaben während des 0-Taktpegels aus.
-
+  
   Während der eine Riegel seine Ausgaben auswertet, sind die Ausgaben des jeweils anderen stabil,
   da jeweils nur einer der Riegel aktiv ist.
-
+  
   So kann man (fast) alle Laufzeitprobleme vermeiden
 \end{defbox}
 
@@ -1780,7 +1518,7 @@ Diese Schaltzeichen sind einfache Rechtecke:
 \begin{defbox}
   Schieberegister können durch Verkettung von D-Flipflops erstellt werden.
   Mit jedem Taktzyklus wird der Speicherinhalt der Flipsflops um ein Flipsflop weitergeschoben.
-
+  
   Schieberegister haben eine feste Anzahl von Speicherplätzen (Anzahl der Flipflops) und arbeiten
   nach dem FIFO-Prinzip.
 \end{defbox}
@@ -1808,19 +1546,19 @@ oder eines parallelen Datenstroms in einen seriellen (\ref{fig:schieberegister_0
 \begin{figure}[H]
   \begin{minipage}[t]{0.45\textwidth}
     \caption{Einf. 4-Bit-Ringzähler}
-
+    
     \centering
     \includegraphics{4-bit-ringzähler}
-
+    
     \includegraphics{4-bit-ringzähler-takt}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.45\textwidth}
     \caption{4-Bit-Johnson-Ringzähler}
-
+    
     \centering
     \includegraphics{4-bit-johnson-ringzähler}
-
+    
     \includegraphics{4-bit-johnson-ringzähler-takt}
   \end{minipage}
 \end{figure}
@@ -1857,26 +1595,6 @@ Das LFSR in Abb. \ref{fig:lfsr_long} hat Rückkopplungen von den Positionen 10, 
 Solche Schieberegister werden z.B. zur Erzeugung von Pseudozufallszahlen oder zur Zyklischen Redundanzprüfung verwendet
 
 
-\subsubsection{Zähler}
-%TODO Sequentielle Logik - p54
-\subsubsection{Steuerbare Zähler}
-
-\subsection{Speicherzellen und Programmzähler}
-\subsubsection{Speicherzellen \& -register}
-\subsubsection{Programmzähler}
-
-
-\section{Hardware-Simulation der sequentiellen Logik}
-\subsection{Hack-Architektur}
-%TODO FIND OWN SECTION
-\begin{figure}[H]
-  \caption{Hack-Prozessor}
-  \label{fig:hack_prozessor}
-  \centering
-  \includegraphics{hack_prozessor}
-\end{figure}
-
-TODO Sequentielle Logik p61
 
 
 \chapter{Rechnerarchitektur}
@@ -2017,43 +1735,6 @@ bei der von-Neumann-Architektur (Abb. \ref{fig:von_neumann_architektur}) in eine
   \includegraphics{von_neumann_architektur}
 \end{figure}
 
-\section{Die Hack-Plattform}
-%TODO Rechnerarchitektur p14
-\subsection{Überblick: Hack-Rechner}
-\begin{figure}[H]
-  \begin{minipage}[t]{0.45\textwidth}
-    \paragraph{Rahmendaten}
-    \begin{itemize}
-      \item 16-Bit Harvard-Architektur
-      \item Befehls- \& Datenspeicher physisch getrennt
-      \item $512 \times 256$ Pixel Bildschirm, Standardtastatur
-      \item führt Hack-Maschinensprache aus
-    \end{itemize}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.45\textwidth}
-    \paragraph{Hauptbestandteile}
-    \begin{itemize}
-      \item Prozessor (Central Processing Unit, CPU)
-      \item Befehlsspeicher (32 kB Read Only Memory, ROM)
-      \item Datenspeicher (16 kB Random Access Memory, RAM)
-      \item ''Computer'' (übergeordnete Einheit)
-    \end{itemize}
-  \end{minipage}
-\end{figure}
-
-
-\subsection{Befehls- und Datenspeicher (ROM32K \& RAM16K)}
-\subsection{Gesamtsystem}
-\subsection{Bildschirm \& Bildschirmspeicher}
-\subsection{Tastatur}
-\subsection{hauptspeicherorganisation}
-\subsection{Prozessor (Central Processing Unit, CPU)}
-\subsection{Gesamtsystem (Computer On A Chip)}
-\subsection{TastaRechnerarchitektur Realer Computer}
-
-
-
 \chapter{Maschinensprache und Assembler}
 
 \section{Die Hack-Maschinensprache}
@@ -2061,7 +1742,7 @@ bei der von-Neumann-Architektur (Abb. \ref{fig:von_neumann_architektur}) in eine
 \begin{defbox}[Maschinensprache]
   Maschinensprache kann von Rechnern direkt ausgeführt werden und ist deshalb auch abhängig von der
   Hardware-Plattform, welche ihre Semantik realisiert.
-
+  
   Auch besteht die Maschinensprache nicht mehr aus Symbolen, sondern aus Binärzahlen, weshalb sie von Menschen
   nur mit großen Schwierigkeiten zu lesen ist
 \end{defbox}
@@ -2137,8 +1818,9 @@ Dieser Wert kann später verwendet werden als:
   \hfill
   \begin{minipage}[t]{0.45\textwidth}
     \caption{Hack-CPU}
-    \label{fig:hack_cpu_leitungen}
+    \label{fig:hack_cpu_leitungen1}
     \centering
+    
     \includegraphics[width=\textwidth]{hack_cpu_leitungen}
   \end{minipage}
 \end{figure}
@@ -2154,10 +1836,10 @@ Die C-Anweisung führt eine Berechnung mit Hilfe der Arithmetisch-Logischen Einh
 \begin{itemize}
   \item Die auszuführende Berechnung (computation, comp) ist in den Bits $m$, $zx$, $nx$, $zy$, $ny$, $f$ und $no$ kodiert.
         \subitem $\rightarrow$ ALU-Steuerbits
-
+        
   \item Die Bits $d_2$, $d_1$ und $d_0$ (destination, dest) bestimmen den Speicherort des Ergebnisses
         \subitem $\rightarrow$ Wählt zwischen D-Register, A-Register, und Memory[A] (= durch A-Register addresssierte Speicherzelle) (bzw. Kombination)
-
+        
   \item Die Bits $j_2$, $j_1$ und $j_0$ (jump) bestimmen, ob und unter welchen Bedingungen gesprungen (verzweigt) werden soll
         \subitem $\rightarrow$ Wählt zwischen $out = 0$,$out<0$, $out>0$ (bzw Kombination, wie $out \leq 0$)
 \end{itemize}
@@ -2211,7 +1893,7 @@ Man beachte, dass das höchstwertige Bit einer C-Anweisung (Abb. \ref{fig:maschi
   \begin{minipage}[t]{0.5\textwidth}
     \begin{defbox}[Maschinensprache]
       ist nah am physikalischen Rechner
-
+      
       Programme als Folgen von \textit{Binärzahlen}, die als Befehle interpretiert werden
     \end{defbox}
   \end{minipage}
@@ -2219,7 +1901,7 @@ Man beachte, dass das höchstwertige Bit einer C-Anweisung (Abb. \ref{fig:maschi
   \begin{minipage}[t]{0.5\textwidth}
     \begin{defbox}[Assemblersprache]
       symbolische Form der Masch.sprache
-
+      
       \textit{Symbole} (für menschen verständlich) zur Darstellung von Programmen
     \end{defbox}
   \end{minipage}
@@ -2372,7 +2054,7 @@ C-Anweisungen bestehen aus drei Komponenten:
 
 \begin{table}[H]
   \centering
-
+  
   \begin{tabular}{c|ll}
     Symbol & Beschreibung                          & \\\hline
     A      & A-Register (Addressenregister)        & \\
@@ -2719,14 +2401,14 @@ Label definieren (ähnlich, zur Assemblersprache) Marken im Programmtext, die z.
   \item $if-goto\ c$: Springt zu einer Marke im Programmtext, wenn das oberste Stapelelement nicht $0$ ist (Element wird von Stapel entfernt)
 \end{itemize}
 
-\subsection{Objekt- und Arraybehandlung}
-\subsubsection{Objektbehandlung}
-p31
-\subsubsection{Arraybehandlung}
+% \subsection{Objekt- und Arraybehandlung}
+% \subsubsection{Objektbehandlung}
+% p31
+% \subsubsection{Arraybehandlung}
 
-\subsection{Funktionsaufrufe, globaler Stapel zur Steuerung}
-\subsection{Befehlssatz}
-\subsection{Programmstart}
+% \subsection{Funktionsaufrufe, globaler Stapel zur Steuerung}
+% \subsection{Befehlssatz}
+% \subsection{Programmstart}
 
 \chapter{Hochsprachen und Kompiler}
 
@@ -2851,9 +2533,9 @@ Man kann diesen Prozess als Erweiterung des Syntax-Analysierers betrachtet, nur 
 \subsection{Struktur des Internet}
 \begin{defbox}[Internet - Wirte \& Vermittlungsstellen]
   Das Internet ist ein Rechnernetzwerk, das etwa eine Milliarde Rechner rund um die Erde miteinander verbindet.
-
+  
   Die Rechner nennt man \textit{Wirte (Hosts)} oder \textit{Endsysteme (End Systems]}
-
+  
   Sie sind durch ein Netz von \textit{Kommunikationsverbindungen (Communication Links)} und \textit{Paketvermittlungen (packet switches)} verbunden
 \end{defbox}
 
@@ -2872,15 +2554,15 @@ Netze, die Endsysteme mit der ersten Vermittlungsstelle (router) verbinden heiß
 \begin{defbox}
   Bei der \textit{Leitungsvermittlung} sind die Vermittlungsstellen durch Leitungen verbunden,
   von denen jeweils eine der zu vermittelnden Kommunikation zugeordnet wird.
-
+  
   Probleme
   \begin{itemize}
     \item Volle Übertragungskapazität der Leitung für eine Kommunikation reserviert,
           auch wenn sie nicht genutzt wird (Pause in der Übertragung).
-
+          
     \item Zahl der gleichzeitig möglichen Übertragungen durch Anzahl der Leitungen beschränkt
   \end{itemize}
-
+  
   Diese Probleme lassen sich durch Multiplexverfahren lösen
 \end{defbox}
 
@@ -2889,13 +2571,13 @@ Netze, die Endsysteme mit der ersten Vermittlungsstelle (router) verbinden heiß
 \begin{figure}[H]
   \begin{minipage}[t]{0.45\textwidth}
     Durch \textit{Multiplexverfahren} lässt sich die Bandbreite einer Leitung besser ausnutzen:
-
+    
     \paragraph{Frequenz-Multiplex} (FDM) nutzt aus, dass eine Kommunikation nicht das volle Frequenzspektrum benötigt, 
     eine Leitung (link) aber ein viel größeres Spektrum übertragen kann.
-
+    
     \paragraph{Zeit-Multiplex} (TDM) unterteilt die Zeit, die Verbindungen eine Leitung benutzen in kleine Abschnitte. 
     Jede Verbindung darf während der ihr zugeordneten Zeitabschnitte die Leitung benutzen.
-
+    
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.45\textwidth}
@@ -2904,8 +2586,8 @@ Netze, die Endsysteme mit der ersten Vermittlungsstelle (router) verbinden heiß
     \begin{center}
       \includegraphics{frequenz-multiplex}
     \end{center}
-
-
+    
+    
     \caption{Zeit-Multiplex}
     \label{fig:zeit-multiplex}
     \begin{center}
@@ -2921,7 +2603,7 @@ verschwenden immer noch Übertragungskapazität
 \begin{defbox}
   Bei der Paketvermittlung werden zu übertragende Daten in sogenannte \textit{Datenpakete} aufgeteilt,
   die übertragen werden, wenn die Leitung verfügbar ist.
-
+  
   Hierzu benutzt man \textit{Speichern und Weiterleiten}, 
   wobei Vermittlungsstellen Datenpakete empfangen und zwischenspeichern. 
   Erst wenn das gesamte Paket empfangen wurde, wird es weitergeleitet
@@ -2953,7 +2635,7 @@ verschwenden immer noch Übertragungskapazität
   \begin{minipage}[t]{0.45\textwidth}
     Entsteht, da Datenpaket in Vermittlungsstelle vor Weiterleiten
     erst vollständig empfangen werden müssen. 
-
+    
     ($\rightarrow$ Speichern und Weiterleiten)
     \begin{itemize}
 
@@ -2976,7 +2658,7 @@ verschwenden immer noch Übertragungskapazität
     \begin{center}
       \includegraphics[width=\textwidth]{uebertragungsverzoegerung}
     \end{center}
-
+    
     \caption{Vergleich - Paketgrößen}
     \begin{center}
       \includegraphics[width=\textwidth]{uebertragungsverzoegerung_paketgroeßen}
@@ -3121,9 +2803,9 @@ Erweiterung der Kommunikation von Wirten auf Prozesse (über sog. Sockets)
 \begin{figure}[H]
   \begin{minipage}[t]{0.45\textwidth}
     Die Protokolle der Transportschicht sind in den Wirten und Endsystemen, aber nicht in den Vermittlungsstellen implementiert.
-
+    
     Nachrichten in der Anwendungsschicht werden in \textit{Segmente} zerlegt
-
+    
     (z.B.: TCP-Segmente, Abb. \ref{fig:tcp_segment})
   \end{minipage}
   \hfill
@@ -3142,13 +2824,13 @@ Die Hauptfunktionen der Netzwerkschicht sind:
 \begin{figure}[H]
   \begin{minipage}[t]{0.45\textwidth}
     \paragraph{Weiterleiten} (forwarding)
-
+    
     Vermittlungsstellen müssen Datenpakete nach Ankunft an die passende Ausgangsleiung weiterleiten.
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.45\textwidth}
     \paragraph{Wegeplanung} (routing)
-
+    
     Die Netzwerkschicht bestimmt den Weg oder Pfad, den Pakete durch das Netzwerk nehmen,
     während sie vom Empfänger übertragen werden.
   \end{minipage}
